@@ -1,6 +1,8 @@
 telemetry = false
+jsx = "react-jsx"
+jsxImportSource = "@kitajs/html"
 
 [loader]
 ".replit" = "toml"
-".js" = "js"
+".ts" = "ts"
 ".sqlite" = "sqlite"

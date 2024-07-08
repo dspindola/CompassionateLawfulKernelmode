@@ -1,5 +1,5 @@
-run = "bun run --port=8080 --watch ./server.ts"
-entrypoint = "server.ts"
+run = "bun run dev"
+entrypoint = "src/index.ts"
 modules = ["nix", "web"]
 compile = "bun run build"
 
