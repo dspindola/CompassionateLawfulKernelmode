@@ -1,10 +1,11 @@
-import { Elysia, t } from "elysia"
-import { Client } from "@replit/object-storage"
+import { Elysia } from "elysia"
+import { html } from "@elysiajs/html"
 import { cors } from "@elysiajs/cors"
 import { swagger } from "@elysiajs/swagger"
 import { staticPlugin } from "@elysiajs/static"
 import logixlysia from 'logixlysia'
 import { elysiaObjectStoragePlugin } from "./plugins/storage"
+import { get, } from "./routes";
 
 const mode = process.env.NODE_ENV !== "production" ? 'dev' : 'prod'
 
@@ -23,9 +24,12 @@ const http = new Elysia()
 		}
 	}))
 	.use(cors())
+	.use(html({
+		autoDetect: true,
+		autoDoctype: true
+	}))
 	.use(staticPlugin({
-		assets: "./",
-		prefix: "/_static",
+		prefix: "/",
 		noCache: true,
 	}))
 	.use(swagger())
@@ -33,6 +37,8 @@ const http = new Elysia()
 		prefix: "/storage",
 		bucketId: "replit-objstore-090156f4-ff5a-4431-b7aa-c6ed330d5efb"
 	}))
+	.get('/', get)
+
 
 
 export default http;

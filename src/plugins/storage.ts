@@ -1,5 +1,5 @@
 import { Elysia, t } from "elysia"
-import { Client } from "@replit/object-storage"
+import { StorageAPI } from "./api";
 
 export const StorageUploadQueryParameters = t.Object({
 	compress: t.BooleanString({
@@ -12,69 +12,36 @@ export const StorageUploadBody = t.Object({
 	content: t.String()
 })
 
-class Storage {
-	constructor() { }
-
-	static async uploadFromText(client: Client, path: string, content: string, options: {
-		compress: boolean
-	}) {
-		return await client.uploadFromText(path, content, options)
-	}
-
-	static async uploadFromBytes(client: Client, path: string, content: Buffer, options: {
-		compress: boolean
-	}) {
-		return await client.uploadFromBytes(path, content, options)
-	}
-
-	static async uploadFromFilename(client: Client, name: string, filename: string, options: {
-		compress: boolean,
-	}) {
-		try {
-
-			const file = Bun.file(filename) as import('bun').BunFile;
-			const fileExists = await file.exists();
-
-			if (!fileExists || !file.name) {
-				throw new Error(`Filen ${filename} finns inte`)
-			}
-
-			return await client.uploadFromFilename(name, file.name, options)
-		} catch (error) {
-			const { message } = error as Error
-			return new Response(message, { status: 404 })
-		}
-	}
-}
-
 export const elysiaObjectStoragePlugin = <T extends string>({ prefix, bucketId }: {
 	bucketId: string,
 	prefix: T,
 }) => new Elysia<T>({ name: 'storage', prefix })
 	.model('StorageUploadQueryParameters', StorageUploadQueryParameters)
 	.model('StorageUploadBody', StorageUploadBody)
-	.decorate('storage', new Client({ bucketId }))
-	.get("/list", ({ storage }) => {
-		return storage.list()
+	.decorate('_storage', new StorageAPI({
+		bucketId,
+	}))
+	.get("/list", ({ _storage }) => {
+		return _storage.list()
 	})
-	.post('/upload-from-text', async ({ storage, body, query }) => {
-		return Storage.uploadFromText(storage, body.path, body.content, {
+	.post('/upload-from-text', async ({ _storage, body, query }) => {
+		return _storage.uploadFromText(body.path, body.content, {
 			compress: query.compress
 		})
 	}, {
 		query: "StorageUploadQueryParameters",
 		body: "StorageUploadBody"
 	})
-	.post('/upload-from-bytes', async ({ storage, body, query }) => {
-		return await Storage.uploadFromBytes(storage, body.path, Buffer.from(body.content), {
+	.post('/upload-from-bytes', async ({ _storage, body, query }) => {
+		return await _storage.uploadFromBytes(body.path, Buffer.from(body.content), {
 			compress: query.compress
 		})
 	}, {
 		query: "StorageUploadQueryParameters",
 		body: "StorageUploadBody"
 	})
-	.post('/upload-from-filename', async ({ storage, body, query }) => {
-		return Storage.uploadFromFilename(storage, body.path, query.filename, {
+	.post('/upload-from-filename', async ({ _storage, body, query }) => {
+		return await _storage.uploadFromFilename(body.path, query.filename, {
 			compress: query.compress
 		})
 	}, {
@@ -86,8 +53,8 @@ export const elysiaObjectStoragePlugin = <T extends string>({ prefix, bucketId }
 		}),
 		body: "StorageUploadBody"
 	})
-	.get('/download-as-stream', ({ query, storage }) => {
-		return storage.downloadAsStream(query.filename, {
+	.get('/download-as-stream', ({ query, _storage }) => {
+		return _storage.downloadAsStream(query.filename, {
 			decompress: query.decompress
 		})
 	}, {
@@ -98,8 +65,8 @@ export const elysiaObjectStoragePlugin = <T extends string>({ prefix, bucketId }
 			})
 		})
 	})
-	.get('/download-as-text', ({ query, storage }) => {
-		return storage.downloadAsText(query.filename, {
+	.get('/download-as-text', ({ query, _storage }) => {
+		return _storage.downloadAsText(query.filename, {
 			decompress: query.decompress
 		})
 	}, {
@@ -110,8 +77,8 @@ export const elysiaObjectStoragePlugin = <T extends string>({ prefix, bucketId }
 			})
 		})
 	})
-	.get('/download-as-bytes', ({ query, storage }) => {
-		return storage.downloadAsBytes(query.filename, {
+	.get('/download-as-bytes', ({ query, _storage }) => {
+		return _storage.downloadAsBytes(query.filename, {
 			decompress: query.decompress
 		})
 	}, {
@@ -122,15 +89,15 @@ export const elysiaObjectStoragePlugin = <T extends string>({ prefix, bucketId }
 			})
 		})
 	})
-	.get('/file-exists', ({ query, storage }) => {
-		return storage.exists(query.objectName,)
+	.get('/file-exists', ({ query, _storage }) => {
+		return _storage.exists(query.objectName,)
 	}, {
 		query: t.Object({
 			objectName: t.String()
 		})
 	})
-	.delete('/object', ({ body, query, storage }) => {
-		return storage.delete(body.objectName, {
+	.delete('/object', ({ body, query, _storage }) => {
+		return _storage.delete(body.objectName, {
 			ignoreNotFound: query.ignoreNotFound
 		})
 	}, {

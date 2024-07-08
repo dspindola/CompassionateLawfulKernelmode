@@ -1,11 +1,6 @@
-smol = true
 telemetry = false
 
 [loader]
-".replit" ="toml"
+".replit" = "toml"
 ".js" = "js"
-".ts" = "ts"
 ".sqlite" = "sqlite"
-
-[run]
-shell = "bun"

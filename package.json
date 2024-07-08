@@ -5,11 +5,13 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "NODE_ENV=development; bun run --port=8080 --smol --watch ./server.ts",
-    "build": "bun build ./server.ts --define=process.env.NODE_ENV:\"'production'\" --sourcemap=external  --format=esm --target=bun --outdir=dist --minify",
-    "start": "NODE_ENV=production; bun run --port=8080 --smol ./dist/server.js"
+    "dev": "NODE_ENV=development; bun run --port=8080 --smol --watch ./src/index.ts",
+    "build": "bun build ./src/index.ts --define=process.env.NODE_ENV:\"'production'\" --sourcemap=external  --format=esm --target=bun --outdir=dist --minify",
+    "start": "NODE_ENV=production; bun run --port=8080 --smol ./dist/index.js"
   },
   "devDependencies": {
+    "@kitajs/cli": "^1.1.36",
+    "@kitajs/ts-plugin": "^1.1.23",
     "@types/bun": "latest",
     "tsup": "^8.1.0"
   },
@@ -24,6 +26,9 @@
     "@elysiajs/stream": "^1.0.3",
     "@elysiajs/swagger": "^1.0.5",
     "@elysiajs/websocket": "^0.2.8",
+    "@kitajs/html": "^4.1.0",
+    "@kitajs/runtime": "^1.1.19",
+    "@kitajs/ts-html-plugin": "^4.0.1",
     "@replit/database": "^3.0.1",
     "@replit/object-storage": "^1.0.0",
     "db0": "^0.1.4",
