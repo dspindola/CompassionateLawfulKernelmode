@@ -1,0 +1,35 @@
+{
+  "name": "compassionatelawfulkernelmode",
+  "module": "server.ts",
+  "main": "./dist/server.js",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "NODE_ENV=development; bun run --port=8080 --smol --watch ./server.ts",
+    "build": "bun build ./server.ts --define=process.env.NODE_ENV:\"'production'\" --sourcemap=external  --format=esm --target=bun --outdir=dist --minify",
+    "start": "NODE_ENV=production; bun run --port=8080 --smol ./dist/server.js"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "tsup": "^8.1.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@elysiajs/cors": "^1.0.2",
+    "@elysiajs/eden": "^1.0.14",
+    "@elysiajs/html": "^1.0.2",
+    "@elysiajs/static": "^1.0.3",
+    "@elysiajs/stream": "^1.0.3",
+    "@elysiajs/swagger": "^1.0.5",
+    "@elysiajs/websocket": "^0.2.8",
+    "@replit/database": "^3.0.1",
+    "@replit/object-storage": "^1.0.0",
+    "db0": "^0.1.4",
+    "drizzle-kit": "^0.22.8",
+    "drizzle-orm": "^0.31.4",
+    "elysia": "^1.0.27",
+    "logixlysia": "^3.4.0"
+  }
+}
