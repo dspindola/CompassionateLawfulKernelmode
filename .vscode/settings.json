@@ -1,5 +1,72 @@
 {
+    // ---------------------------
+    // TSDK                      |
+    // ---------------------------
     "typescript.tsdk": "node_modules/typescript/lib",
     "typescript.enablePromptUseWorkspaceTsdk": true,
-    "svg.preview.background": "dark-transparent"
+    "typescript.experimental.tsserver.web.typeAcquisition.enabled": true,
+    // ---------------------------
+    // BUN                       |
+    // ---------------------------
+    "bun.debugTerminal.enabled": true,
+    "bun.runtime": "bun",
+    // ---------------------------
+    // CURSOR                    |
+    // ---------------------------
+    "cursor.general.enableShadowWorkspace": true,
+    "cursor-retrieval.canAttemptGithubLogin": true,
+    "cursor.aipreview.enabled": true,
+    "cursor.cmdk.useThemedDiffBackground": true,
+    // ---------------------------
+    // BIOME                     |
+    // ---------------------------
+    "biome.enabled": true,
+    "biome.rename": true,
+    // ---------------------------
+    // ESLINT                    |
+    // ---------------------------
+    "eslint.options": {
+        "extensions": [
+            ".ts",
+            ".tsx",
+            ".js",
+            ".jsx"
+        ]
+    },
+    "eslint.useFlatConfig": true,
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }
+    ],
+    // ---------------------------
+    // FORMATTERS                |
+    // ---------------------------
+    "[typescript]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[css]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
 }
