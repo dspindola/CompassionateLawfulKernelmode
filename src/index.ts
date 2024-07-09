@@ -1,14 +1,16 @@
-import { http } from "./http";
-import { mode } from "./setup";
+import App from "@app/http";
 
-const app = http
+export const app = App.http
+	.onStart(() => {
+		console.log("Server started");
+	})
+	.onError((error) => {
+		console.error(error);
+	})
 	.listen({
-		port: process.env.PORT,
-		hostname: process.env.HOSTNAME,
-		development: mode === "dev",
-		lowMemoryMode: process.env.LOW_MEMORY_MODE === "1",
-		id: "server",
-		reusePort: process.env.REUSE_PORT === "1",
+		port: App.port,
+		hostname: App.hostname,
+		development: App.dev,
+		lowMemoryMode: App.lowMemoryMode,
+		reusePort: App.reusePort,
 	});
-
-console.log('%s', app.server?.url)
