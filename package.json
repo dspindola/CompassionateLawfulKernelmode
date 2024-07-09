@@ -5,7 +5,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "NODE_ENV=development; bun run --port=8080 --smol --watch ./src/index.ts",
+    "dev": "NODE_ENV=development; bun run --port=8000 --smol --watch ./src/index.ts",
     "build": "bun build ./src/index.ts --define=process.env.NODE_ENV:\"'production'\" --sourcemap=external  --format=esm --target=bun --outdir=dist --minify",
     "start": "NODE_ENV=production; bun run --port=8080 --smol ./dist/index.js"
   },
