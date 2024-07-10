@@ -1,7 +1,6 @@
-run = "bun run dev"
+run = "bun run server:dev"
 entrypoint = "src/index.ts"
 modules = ["nix", "web"]
-compile = "bun run build"
 
 [nix]
 channel = "stable-24_05"
