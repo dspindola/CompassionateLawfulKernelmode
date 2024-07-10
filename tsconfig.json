@@ -10,12 +10,7 @@
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
-    "plugins": [
-      {
-        "name": "@kitajs/ts-html-plugin"
-      }
-    ],
-    "jsxImportSource": "@kitajs/html",
+    "jsxImportSource": "react",
     "moduleResolution": "bundler",
     "noEmit": true,
     "outDir": "./dist",
@@ -38,6 +33,9 @@
       ],
       "@app/*": [
         "./src/*"
+      ],
+      "@gyoza/*": [
+        "./src/libs/tsx/*"
       ]
     },
     "esModuleInterop": true,

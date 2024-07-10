@@ -1,4 +1,9 @@
-import type { setup } from "@app/setup";
-import { get } from "@app/routes";
+import { Elysia } from "elysia";
+import { swagger } from "@elysiajs/swagger";
 
-export default (app: typeof setup) => app.get("/", get);
+export default () =>
+	new Elysia<"/api">({
+		prefix: "/api",
+	})
+		.use(swagger())
+		.get("/", () => "hi");

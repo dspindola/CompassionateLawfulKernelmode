@@ -1,8 +1,9 @@
 import { setup } from "@app/setup";
 export { mode } from "@app/setup";
-import api from "@app/api";
+import app from "@/src/app";
+import api from "./api";
 
-export const http = api(setup);
+export const http = setup.use(app()).use(api());
 
 export const port = process.env.PORT;
 export const hostname = process.env.HOSTNAME;
