@@ -34,7 +34,7 @@ export const buildServerEntry = () =>
 
 export const buildLibs = () =>
 	build({
-		entry: ["./src/libs"],
+		entry: ["./src/libs/api/client.ts"],
 		target: "esnext",
 		platform: "neutral",
 		format: ["esm"],
@@ -42,4 +42,9 @@ export const buildLibs = () =>
 			".ts": "ts",
 			".tsx": "tsx",
 		},
+		dts: {
+			entry: ["./src/libs/api/client.ts", "./src/api.ts"]
+		}
 	});
+
+await buildLibs()

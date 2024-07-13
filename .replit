@@ -1,4 +1,4 @@
-run = "bun run server:dev"
+run = "bun run dev"
 entrypoint = "src/index.ts"
 modules = ["nix", "web"]
 
