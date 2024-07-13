@@ -2,6 +2,7 @@ import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import logixlysia from "logixlysia";
 import { elysiaObjectStoragePlugin } from "./plugins/storage";
+import { staticPlugin } from "@elysiajs/static";
 
 export const mode = process.env.NODE_ENV !== "production" ? "dev" : "prod";
 
@@ -26,5 +27,10 @@ export const setup = new Elysia()
 		elysiaObjectStoragePlugin<"/storage">({
 			prefix: "/storage",
 			bucketId: "replit-objstore-090156f4-ff5a-4431-b7aa-c6ed330d5efb",
+		}),
+	)
+	.use(
+		staticPlugin({
+			prefix: "/_static",
 		}),
 	);

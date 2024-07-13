@@ -14,20 +14,20 @@ export default {
 			name: "server",
 			kind: "http",
 			base: "/api",
-			handler: [import.meta.dir, 'api.ts']
+			handler: [import.meta.dir, "api.ts"],
 		},
 		{
 			name: "client",
 			kind: "http",
 			base: "/",
-			handler: [import.meta.dir, 'app.ts']
-		}
+			handler: [import.meta.dir, "app.ts"],
+		},
 	],
 	configs: [
 		{
-			name: 'client',
+			name: "client",
 			build: {
-				entrypoints: ['src/app.ts', "src/routes", "src/libs/tsx"],
+				entrypoints: ["src/app.ts", "src/routes", "src/libs/tsx"],
 				format: "esm",
 				target: "bun",
 				outdir: "/_dist",
@@ -39,21 +39,19 @@ export default {
 				},
 				sourcemap: "linked",
 				define: {
-					'import.meta': Bun.inspect({
+					"import.meta": Bun.inspect({
 						env: process.env,
-						ssr: false
-					})
-				}
+						ssr: false,
+					}),
+				},
 			} satisfies BuildConfig,
-			meta: 'export const { env } = import.meta',
-			plugins: [
-
-			]
+			meta: "export const { env } = import.meta",
+			plugins: [],
 		},
 		{
-			name: 'server',
+			name: "server",
 			build: {
-				entrypoints: ['src/api.ts', "src/libs/api", "src/libs/db"],
+				entrypoints: ["src/api.ts", "src/libs/api", "src/libs/db"],
 				format: "esm",
 				target: "bun",
 				outdir: "/_dist",
@@ -64,37 +62,40 @@ export default {
 				},
 				sourcemap: "linked",
 				define: {
-					'process.meta': Bun.inspect({
+					"process.meta": Bun.inspect({
 						env: process.env,
-						ssr: true
-					})
-				}
+						ssr: true,
+					}),
+				},
 			} satisfies BuildConfig,
-			meta: 'export const { env, ssr } = process.meta',
+			meta: "export const { env, ssr } = process.meta",
 			plugins: [
 				{
 					name: "rsc",
 					setup(build) {
 						build.onResolve({ filter: /.tsx$/ }, async (ctx) => {
-							const useServer = (await Bun.file(ctx.path).text()).split("\n").at(0)?.includes('use server');
+							const useServer = (await Bun.file(ctx.path).text())
+								.split("\n")
+								.at(0)
+								?.includes("use server");
 
 							console.log({
 								useServer: {
-									[useServer ? 'use server' : 'use client']: {
+									[useServer ? "use server" : "use client"]: {
 										path: ctx.path,
 										file: Bun.file(ctx.path),
 										ssr: useServer,
-									}
-								}
-							})
+									},
+								},
+							});
 							return {
 								path: ctx.path,
-								namespace: ctx.namespace
-							}
-						})
-					}
-				}
-			] as BunPlugin[]
-		}
-	]
-}
+								namespace: ctx.namespace,
+							};
+						});
+					},
+				},
+			] as BunPlugin[],
+		},
+	],
+};

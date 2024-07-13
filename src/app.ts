@@ -1,16 +1,25 @@
-import Index from "@app/routes";
-import About from "./routes/about";
 import { tsxResponse } from "$/libs/tsx/response";
 import { Elysia } from "elysia";
-import { cors } from "@elysiajs/cors";
+import { $route } from "./libs/tsx/route";
 
-export default () =>
-	new Elysia()
-		.use(cors())
-		.mapResponse((context) => {
-			if (!context.path.startsWith("/api/")) {
-				return tsxResponse(context);
-			}
-		})
-		.get("/", Index.get)
-		.get("/about", About.get);
+export const ROUTES = async () => ({
+	index: await import("@app/routes").then((m) => m.default),
+	about: await import("@app/routes/about").then((m) => m.default),
+});
+
+export default ({
+	store,
+}: {
+	store: { routes: { [k: string]: ReturnType<ReturnType<typeof $route>> } };
+}) =>
+	(app: Elysia) =>
+		app
+			.mapResponse((context) => {
+				console.log(app.store);
+
+				if (!context.path.startsWith("/api/")) {
+					return tsxResponse(context);
+				}
+			})
+			.get("/", store.routes.index.get)
+			.get("/about", store.routes.about.get);
