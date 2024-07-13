@@ -44,14 +44,31 @@ export const Head = ({ children: Children }: { children: ReactNode }) => {
 	const Elements = Load({ children: Children });
 	return (
 		<head>
-			<meta charSet="UTF-8" />
+			{Elements}
+		</head>
+	);
+};
+
+export const Body = ({ children, ...props }: { children: ReactNode } & React.JSX.IntrinsicElements["body"]) => {
+	return <body {...props}>{children}</body>;
+};
+
+export const Html = ({ children, ...props }: { children: ReactNode } & React.JSX.IntrinsicElements["html"]) => {
+	return <html lang="en" {...props}>{children}</html>;
+};
+
+export const Layout = ({ links = [], children, ...props }: { links?: ReactNode[], children: ReactNode } & React.JSX.IntrinsicElements["html"]) => {
+	return <Html {...props}>
+		<Head>
+		<meta charSet="UTF-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			<link
 				rel="shortcut icon"
 				href="/_static/favicon.svg"
 				type="image/svg+xml"
 			/>
-			{Elements}
-		</head>
-	);
-};
+			{links}
+		</Head>
+			<Body>{children}</Body>
+	</Html>
+}

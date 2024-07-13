@@ -1,17 +1,15 @@
 import { $route } from "@gyoza/route";
-import { Head } from "./$.layout";
+import { Layout } from "@gyoza/layout";
 
 export default $route(import.meta)(({ path }) => (
-	<html lang="en" className="dark">
-		<Head>
-			<title>{path}</title>
-		</Head>
-		<body className="bg-slate-800">
-			<main>
-				<header>
-					<span>{path}</span>
-				</header>
+		<Layout className="dark bg-slate-800" links={[
+			<link rel="icon" href="/favicon.ico" key="favicon" />,
+			<title key="title">{path}</title>
+		]}>
+			<main className="p-4 border-b border-slate-700">
+				<p className="text-white">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, vero!
+				</p>
 			</main>
-		</body>
-	</html>
+		</Layout>
 ));
