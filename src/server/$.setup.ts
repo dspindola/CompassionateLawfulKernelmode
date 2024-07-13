@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import logixlysia from "logixlysia";
-import { elysiaObjectStoragePlugin } from "./plugins/storage";
+import { elysiaObjectStoragePlugin } from "$/libs/plugins/storage";
 import { staticPlugin } from "@elysiajs/static";
 
 export const mode = process.env.NODE_ENV !== "production" ? "dev" : "prod";

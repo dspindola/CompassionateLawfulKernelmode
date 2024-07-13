@@ -1,6 +1,6 @@
 import { tsxResponse } from "$/libs/tsx/response";
 import { Elysia } from "elysia";
-import { $route } from "./libs/tsx/route";
+import { $route } from "../libs/tsx/route";
 
 export const ROUTES = async () => ({
 	index: await import("@app/routes").then((m) => m.default),

@@ -1,5 +1,5 @@
 import { Elysia, t } from "elysia";
-import { StorageAPI } from "@/src/plugins/api";
+import { StorageAPI } from "./api";
 
 export const StorageUploadQueryParameters = t.Object({
 	compress: t.BooleanString({

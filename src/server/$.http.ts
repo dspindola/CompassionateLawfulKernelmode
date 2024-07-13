@@ -1,7 +1,7 @@
-import { setup } from "@app/setup";
-export { mode } from "@app/setup";
-import app, { ROUTES } from "@/src/app";
-import api from "@/src/api";
+import { setup } from "@/src/server/$.setup";
+export { mode } from "@/src/server/$.setup";
+import app, { ROUTES } from "@/src/server/$.client";
+import api from "@/src/server/$.api";
 import { write } from "bun";
 
 export const http = setup

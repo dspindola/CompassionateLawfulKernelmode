@@ -3,14 +3,9 @@
   "type": "module",
   "version": "0.0.1",
   "license": "MIT",
+  "main": "./app.ts",
   "scripts": {
-    "dev": "bun run server:dev",
-    "start": "NODE_ENV=production; bun run --port=8080 --smol ./dist/index.js",
-    "server:debug": "bun --inspect --hot ./src/index.ts",
-    "server:build": "bun build ./src/index.ts --define=process.env.NODE_ENV:\"'production'\" --sourcemap=external  --format=esm --target=bun --outdir=dist --minify",
-    "server:start": "bun run ./dist/index.js",
-    "server:dev": "NODE_ENV=development; bun run --port=8000 --smol --watch ./src/index.ts",
-    "client:dev": "bun --bun vite --port=8001 --host"
+    "dev": "bun run --port=3000 --watch ./app.ts"
   },
   "dependencies": {
     "@ava/typescript": "^5.0.0",

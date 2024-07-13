@@ -1,4 +1,4 @@
-import app, { http } from "@app/http";
+import app, { http } from "@/src/server/$.http";
 import { BuildConfig, BunPlugin } from "bun";
 
 export default {
